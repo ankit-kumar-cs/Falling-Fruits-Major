@@ -1,0 +1,71 @@
+{%extends 'customer/base.html'%}
+{%load crispy_forms_tags%}
+{%load cust_filters%}
+{%block content%}
+<style>
+
+
+    body {
+        background-color: mintcream;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row mt-2">
+        <div class="col-md-6 border border-light" style="background-color:aliceblue;">
+            <h3 style="text-align:center;margin-bottom:15px;">Your cart</h3>
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Quantity&nbsp;(Kg)</th>
+                        <th scope="col">Price&nbsp;(Per Kg)</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                {% if orders%}
+                <tbody>
+                    {% for item in orders.items.all%}
+
+                    <tr>
+                        <td>{{ item.product.category|get_item_name}}</td>
+                        <td>{{item.quantity}}</td>
+                        <td>{{item.product.price}}</td>
+                        <td>{{item.get_total_item_price}}</td>
+                    </tr>
+
+
+
+
+                    {%endfor%}
+                </tbody>
+
+            </table>
+            <table class="float-right mr-5">
+                <tr>
+                    <td style="font-size:120%;"><strong>Order Total</strong>&nbsp;</td>
+
+                    <td><button class="btn btn-success">{{orders.get_total}}</button></td>
+
+                </tr>
+            </table>
+            {%else%}
+            <div class="alert alert-secondary" style="text-align:center;" role="alert">
+                Your cart is empty.
+
+            </div>
+            {%endif%}
+
+
+        </div>
+        <div class="col-sm-6 col-md-6  border border-light ">
+            <h3 style="text-align:center;margin-bottom:1px;">Your Address</h3>
+            <form class="" action="" method="post">
+                {% csrf_token %}
+                {{form|crispy}}
+                <button class="btn btn-success" type="submit" name="button">Checkout</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{%endblock content%}

@@ -1,0 +1,69 @@
+{%extends 'customer/base.html'%}
+{%load crispy_forms_tags%}
+{%load cust_filters%}
+{%block content%}
+<style>
+
+
+    body {
+        background-color: mintcream;
+    }
+</style>
+<div class="container px-5">
+    <h3 style="text-align:center;margin-bottom:1px;margin-bottom:15px;">Order Summary</h3>
+
+
+
+    {% for order in orders%}
+    <div class="border">
+        <div class="row">
+            <div class="col-md-6 border" style="background-color:ghostwhite;">
+                <table class="table ">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Item</th>
+                            <th scope="col">Quantity&nbsp;(Kg)</th>
+                            <th scope="col">Price&nbsp;(Per Kg)</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order.items.all%}
+                        <tr>
+                            <td>{{ item.product.category|get_item_name}}</td>
+                            <td>{{item.quantity}}</td>
+                            <td>{{item.product.price}}</td>
+                            <td>{{item.get_total_item_price}}</td>
+                        </tr>
+
+                        {%endfor%}
+                    </tbody>
+                </table>
+                <hr />
+                <div class="mx-2 my-2">
+                    <p style="font-size:110%;"><strong>Order Total</strong>&nbsp;{{order.get_total}}</p>
+                    <p style="font-size:110%"><strong>Status of Delivery&nbsp;</strong>{{order.received|delivery_status}}</p>
+                </div>
+            </div>
+            <div class="col-md-6 border" style="background-color:ghostwhite;">
+
+                <p style="font-size:120%;text-align:center;"><strong>Address&nbsp;</strong></p>
+                <hr>
+                <p>Name:&nbsp;<strong>{{order.address.name}}</strong></p>
+                <p>Village Name:&nbsp;<strong>{{order.address.village_name}}</strong></p>
+                <p>PinCode:&nbsp;<strong>{{order.address.pincode}}</strong></p>
+                <p>Contact Number:&nbsp;<strong>{{order.address.contact_number}}</strong></p>
+                <p>Order Date:&nbsp;<strong>{{order.ordered_date}}</strong></p>
+                <p>Delivery Slot:&nbsp;<strong>{{order.address.delivery_time_slot}}</strong></p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <br>
+
+    {%endfor%}
+
+</div>
+
+{%endblock content%}

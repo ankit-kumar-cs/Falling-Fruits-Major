@@ -1,0 +1,7 @@
+{%extends 'customer/base.html'%}
+{% block content %}
+<div class="jumbotron">
+  <h1>Registration Successfull.Now you can Sign In.</h1>
+  <a href="{% url 'customer:log-in'%}"><button class="btn btn-success"type="button" name="button">Sign In</button></a>
+</div>
+{%endblock content%}

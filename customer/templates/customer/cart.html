@@ -1,0 +1,66 @@
+{%extends 'customer/base.html'%}
+{%load cust_filters%}
+{%block content%}
+    <style>
+
+
+        body {
+            background-color: mintcream;
+        }
+    </style>
+    <div class="container">
+        {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible" style="text-align:center" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ message }}
+        </div>
+        {% endfor %}
+
+        {% if orders %}
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Quantity&nbsp;(Kg)</th>
+                    <th scope="col">Price&nbsp;(Per Kg)</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for item in orders.items.all%}
+                <tr>
+                    <td>{{ item.product.category|get_item_name}}</td>
+                    <td>{{item.quantity}}&nbsp;&nbsp;<span><a href="{%url 'customer:add-to-cart' item.product.slug%}"><i class="fas fa-plus-circle"></a></i>&nbsp;&nbsp;<a href="{%url 'customer:remove-single-from-cart' item.product.slug%}"><i class="fas fa-minus-circle"></a></i>&nbsp;&nbsp;<a href="{% url 'customer:remove-from-cart' item.product.slug%}"><i class="fas fa-trash"></i></a></span></td>
+                    <td>{{item.product.price}}</td>
+                    <td>{{item.get_total_item_price}}</td>
+                </tr>
+                {%endfor%}
+                <br>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Order Total</td>
+
+                    <td>{{orders.get_total}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <a  href="{%url 'customer:product'%}" type="button" class="btn btn-success">Explore More Products</a>
+        <a href="{%url 'customer:checkout'%}" type="button" class="btn btn-success float-right">Proceed to Checkout</a>
+        
+        {%else%}
+        <div class="alert alert-secondary" style="text-align:center;" role="alert">
+            You do not have any product in your cart
+            <a href="{% url 'customer:product'%}" type="button" class="btn btn-success">Explore Products</a>
+        </div>
+
+        {%endif%}
+
+
+
+    </div>
+    
+{%endblock content%}

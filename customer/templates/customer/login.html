@@ -1,0 +1,16 @@
+{%extends "customer/base.html"%}
+{%block content%}
+{% load crispy_forms_tags %}
+
+<div class="" >
+  <div class="jumbotron">
+
+
+  <form class="" action="" method="post">
+    {% csrf_token %}
+        {{ login_form|crispy }}
+    <button class="btn btn-success"type="submit" name="button">Submit</button>
+  </form>
+  </div>
+  </div>
+{%endblock content%}

@@ -1,0 +1,43 @@
+{% extends 'customer/base.html'%}
+{%block content%}
+<style>
+    .profile-field {
+        font-size: 130%;
+    }
+
+    .jumbotron {
+        background-color: darkgray;
+    }
+    .profile-section{
+        background-color:green;
+        color:white;
+    }
+</style>
+{% if messages %}
+    {% for message in messages %}
+<div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+<div class="main">
+    <div class="jumbotron">
+        <div class="  ml-4 mr-4 py-2 inside">
+            <div class="row text-center">
+                <div class="col-12">
+                    <img width="80px" height="80px" src="{{user.profile.image.url}}" class="rounded-circle" style="margin: 0 auto;" />
+                    <h1 style="color:green;">{{username}}</h1>
+                    <div class="profile-section pb-4">
+                        <p>Profile Info</p>
+                        Name<p class="profile-field"><strong>{{f_name}}&nbsp;{{l_name}}</strong></p>
+
+                        Contact<p class="profile-field">{{contact}}</p>
+                        Email<p class="profile-field">{{email}}</p>
+                        <a href="{% url 'customer:update-profile' %}"><button class="btn btn-primary">Update Profile</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{%endblock content%}

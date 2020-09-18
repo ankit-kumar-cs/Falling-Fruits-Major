@@ -1,0 +1,23 @@
+{% extends "customer/base.html" %}
+{%load cust_filters%}
+{% load static %}
+{% block content %}
+    <style>
+        .d-flex{
+            background-color:aliceblue;
+        }
+    </style>
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" width="100%" height="250px;"src="{%static 'customer/'%}{{product.category|splitcat}}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{product.category}}</h5>
+                <a href="#" class="btn btn-primary mb-2">{{product.farm.farm_name }}</a>
+                <a href="{% url 'customer:add-to-cart' product.slug%}" class="btn btn-primary mb-2">Add to Cart</a>
+                <a href="{% url 'customer:remove-from-cart' product.slug%}" class="btn btn-primary mb-2">Remove From Cart</a>
+            </div>
+            <p style="text-align:center">
+                Item sold by <a href="#">{{product.farm.farm_name }}</a></p>
+        </div>
+    </div>
+{% endblock content%}

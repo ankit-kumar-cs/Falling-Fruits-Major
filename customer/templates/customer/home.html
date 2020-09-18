@@ -1,0 +1,62 @@
+﻿{% extends "customer/base.html" %}
+{%load cust_filters%}
+{% load static %}
+{% block content %}
+<style>
+    .navbar {
+        margin-bottom: -40px;
+        margin-top: -25px;
+        border-radius: 0;
+    } 
+    .product{
+        margin-top:40px;
+    }
+    body{
+        background-color:mintcream;
+    }
+</style>
+<div class="container product">
+    {% for products in product%}
+    {% if forloop.counter0|divisibleby:4 %} <div class="row text-center">
+        {%  endif %}
+        <div class="col-md-3 mb-4 mb-md-0 listproduct" style="cursor: pointer">
+            <div class="card">
+                <img  width="100%" height="200px"src="{%static 'customer/'%}{{products.category|splitcat}}" alt="Not available">
+                <div class="card-content" style="background-color:aliceblue;">
+                    <br>
+                    <h4>{{products.category}}</h4>
+                    <hr>
+                    <h3>{{ products.price }}&nbsp; &#8377; &bsol; kg</h3>
+                    <button class="btn btn-primary mb-2">{{ products.farm.farm_name }}</button>
+                    <button class="btn btn-success mb-2">Add to Cart</button>
+                    <br>
+
+                </div><!-- card content -->
+            </div><!-- card -->
+        </div><!-- col-md-4 -->
+        {%  if forloop.counter|divisibleby:4 or forloop.last %}
+    </div><!-- row closing --><hr>
+    {%  endif %}
+    {%  endfor %}
+</div><!-- container -->
+<div class="jumbotron" style="margin-bottom:0px;">
+    <h1 class="display-4">Welcome to Falling Fruits</h1>
+    <p class="lead">A Place where you can buy and sell fresh fruits</p>
+    <p class="lead">Our Motive is to Dwindle the distance between buyer and seller.</p>
+
+</div>
+<div class="jumbotron" style="background-color:green;color:white;margin-bottom:0px;">
+    <h1 class="display-4">How we work?</h1>
+    <p class="lead">We directly connects you with the producer/consumer without any involvement of Middlemen</p>
+</div>
+<div class="jumbotron" style="background-color:purple;color:white">
+    <h1 class="display-4">What you can sell/buy?</h1>
+    <ul class="list-group mt-4" style="text-align:center;font-size:120%">
+        <li class="list-group-item list-group-item-primary">Fresh Fruits & Vegetables</li>
+        <li class="list-group-item list-group-item-secondary">Grains</li>
+        <li class="list-group-item list-group-item-success">Spices</li>
+        <li class="list-group-item list-group-item-danger">Cotton</li>
+    </ul>
+    <p style="color:grey;text-align:center">*Availability of these items is based on Season(Spring,Winter or Summer)</p>
+</div>
+{% endblock content%}
